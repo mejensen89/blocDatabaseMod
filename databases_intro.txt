@@ -1,0 +1,73 @@
+>What data types do each of these values represent?
+
+"A Clockwork Orange" - string
+42- interger
+09/02/1945 - date
+98.7 - float
+$15.99 - MONEY datatype. "$" is stored as part of format. Possbily may be stored as a string too depending on who set up the database. 
+
+
+>Explain when a database would be used. Explain when a text file would be used.
+
+A: A database would be useful if there will be multiple people making updates to the data at the same time. A text file would be more useful if only one machine or person is going to managing the data and it is stored locally.
+
+>Describe one difference between SQL and other programming languages.
+
+A: Its declarative rather than procedural. You just need to tell SQL what you want it to do and it will do it, where as with procedural languages you have to tell the machine how you want it to do what you're trying to accomplish.
+
+>In your own words, explain how the pieces of a database system fit together at a high level.
+
+A: A SQL database will store information in rows and columns. like a spreadsheet on steroids. The colums represent different fields and the rows represent individual entries of data. 
+
+>Explain the meaning of table, row, column, and value.
+
+A: Table - a database storing information 
+row - an individual entry in a table consisting of values matched to colums. 
+Column - a section of a table that conatains multiple values that are all the same datatype and the label for the data. 
+Value: Data stored within an individual cell of a table. 
+
+>List three data types that can be used in a table.
+
+A: Strings. intergers, floats
+
+>Given this `payments` table, provide an English description of the following queries and include their results:
+
+```
+     SELECT date, amount
+     FROM payments; //shows a list of the amount of purchases and what days they occured on
+
+     SELECT amount
+     FROM payments
+     WHERE amount > 500; // shows a list of payments that were greather than 500. 
+
+     SELECT *
+     FROM payments
+     WHERE payee = 'Mega Foods'; //Displays all the information stored in the database where 'Mega Foods' was the payee
+
+```
+
+>Given this users table, write SQL queries using the following criteria and include the output:
+
+>The email and sign-up date for the user named DeAndre Data.
+
+```
+SELECT email, signup
+FROM users
+where name='DeAndre Data';
+```
+
+>The user ID for the user with email 'aleesia.algorithm@uw.edu'.
+
+```
+SELECT userid
+FROM users
+WHERE email = "allesia.algorithm@uw.edu";
+```
+
+>All the columns for the user ID equal to 4.
+
+```
+SELECT *
+FROM users
+WHERE userid = 4;
+```
