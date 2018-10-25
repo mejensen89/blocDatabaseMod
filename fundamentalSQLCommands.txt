@@ -18,27 +18,66 @@ Examples of each from OlyWlog: Weights lifted in a workout are stored in a table
 >Which data type would you use to store each of the following pieces of information?
 
 A:
-First and last name.Text
+First and last name- Text
 Whether they sent in their RSVP. - Boolean
 Number of guests. - Interger
 Number of meals. - Interger
 
 >Write a command that creates the table to track the wedding dinner.
 
+```
+CREATE TABLE weddingGuests (Name text, RSVP boolean, partySize interger, mealNumber interger);
+```
+
 >Write a command that adds a column to track whether the guest sent a thank you card.
+
+```
+ALTER TABLE weddingGuests ADD COLUMN thankCard boolean SET DEFAULT false;
+```
 
 >You have decided to move the data about the meals to another table, so write a command to remove the column storing the number meals from the wedding table.
 
+```
+ALTER TABLE weddingGuests DROP COLUMN mealNumber;
+```
+
 >The guests will need a place to sit at the reception, so write a command that adds a column for table number.
+
+```
+ALTER TABLE weddingGuestss ADD COLUMN tableNumber interger SET DEFAULT 0;
+```
 
 >The wedding is over and we do not need to keep this information, so write a command that deletes the table numbers from the database.
 
+```
+ALTER TABLE weddingGuests DROP COLUMN tableNumber;
+```
+
 >Write a command to create a new table to hold the books in a library with the columns ISBN, title, author, genre, publishing date, number of copies, and available copies.
 
+```
+CREATE TABLE books (ISBN char(13), title text, author text, genre text, published date, copies interger, inStock interger)
+```
+
 >Find three books and add their information to the table.
-Someone has just checked out one of the books. Change the number of available copies to 1 fewer.
+
+```
+INSERT INTO books (ISBN, title, author, genre, published, copies, inStock)
+VALUES
+(9780141397641, "Socrates Defence", "Plato", "philosophy", 01/01/2015, 10, 5),( 9781503226944, "The Enchiridion", "Epictetus", "philosophy", 01/01/2014, 9, 3),(9780879757021, "Meditations (Great Books in Philosophy)", "Emperor of Rome Marcus Aurelius", "philosophy", 01/01/1991, 3, 1);
+```
+
+>Someone has just checked out one of the books. Change the number of available copies to 1 fewer.
+
+```
+UPDATE books SET inStock=2 where ISBN=9781503226944;
+```
 
 >Now one of the books has been added to the banned books list. Remove it from the table.
+
+```
+DELETE FROM books where ISBN=9780879757021;
+```
 
 >Write a command to make a new table to hold spacecrafts. Information should include id, name, year launched, country of origin, a brief description of the mission, orbiting body, if it is currently operating, and its approximate miles from Earth. In addition to the table creation, provide commands that perform the following operations:
 

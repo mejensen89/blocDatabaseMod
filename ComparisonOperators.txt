@@ -1,0 +1,140 @@
+>Write out a generic SELECT statement.
+
+```
+SELECT *
+FROM sumData
+WHERE total > 1;
+```
+>Create a fun way to remember the order of operations in a SELECT statement, such as a mnemonic.
+
+A: Looked it up but its memorable:
+Sharks fight jellyfish with guns! Hide on land.
+SELECT, FROM, JOIN, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT
+
+>Given this `dogs` table, write queries to select the following pieces of data:
+
+>Intake teams typically guess the breed of shelter dogs, so the breed column may have multiple words (for example, "Labrador Collie mix").
+
+>Display the name, gender, and age of all dogs that are part Labrador.
+
+```
+SELECT name, gender, age
+FROM dogs
+WHERE breed LIKE '%Labrador%';
+```
+
+>Display the ids of all dogs that are under 1 year old.
+
+```
+SELECT id
+FROM dogs
+WHERE age < 1;
+```
+
+>Display the name and age of all dogs that are female and over 35lbs.
+
+```
+SELECT name, age
+FROM dogs
+WHERE gender = 'F' AND weight > 35;
+```
+
+>Display all of the information about all dogs that are not Shepherd mixes.
+
+```
+SELECT *
+FROM dogs
+WHERE breed NOT LIKE '%shepherd';
+```
+
+>Display the id, age, weight, and breed of all dogs that are either over 60lbs or Great Danes.
+
+```
+SELECT id, age, weight, breed
+FROM dogs
+WHERE WEIGHT > 60
+OR breed = 'great dane';
+```
+
+>Given this `cats` table, what records are returned from these queries?
+
+
+
+>SELECT name, adoption_date FROM cats;
+
+A:
+Mushi 2016-03-22,
+Seashell NULL,
+Azul, 2016-04-17,
+Victoire, 2016-09-01,
+Nola, NULL
+
+>SELECT name, age FROM cats;
+
+A:
+Mushi 1, 
+Seashell 7,
+Azul 3,
+Victoire 7,
+Nola 1
+
+>From the cats table, write queries to select the following pieces of data.
+
+>Display all the information about all of the available cats.
+
+```
+SELECT *
+FROM cats;
+```
+
+>Display the name and sex of all cats who are 7 years old.
+
+```
+SELECT name, gender
+FROM cats
+WHERE age = 7;
+```
+
+>Find all of the names of the cats, so you don’t choose duplicate names for new cats.
+
+```
+SELECT name
+from cats;
+```
+>List each comparison operator and explain when you would use it. Include a real world example for each.
+
+A:
+IS TRUE/ IS FALSE . Used to test if a value is True or False. Example: `WHERE paid IS FALSE`
+IS NULL . Used to test if a cell is null. Example: `SELECT * FROM cats WHERE adoption_date IS NULL;`
+AND Used to add a condition to a search. Both conditions must test true for result to be returned. Example: `SELECT name, id FROM users WHERE signup_date = 2012/03/07 AND gender = M;`
+> - Greater Than. Used to test if a value is greater than another value. Example: `WHERE age > 3;`
+< - Less Than. Used to test if a value is less than another. Example: `WHERE age < 3;`
+= Equal To. Used to test if two values are equivalent. Example: `WHERE age = 3`
+<= - Less Than or Equal To. Used to test if a value is less than or equal to anothe. Example: `WHERE age <= 3;`
+>= Greater than or Equal to. Used to test if a value is greater than or equal to another. Example: `WHERE age >= 3;`
+!= Not equal to. Used to test if a two values are not equal. Example `WHERE age != 31;`
+<> Greather than or less than. Used to exclude a value from a search. Example: `SELECT * FROM dogs WHERE age <> 3;`
+LIKE - matches patterns in a string. Example: `WHERE name LIKE 'bill';`
+BETWEEN - Used to test if a value is between two valuse. Example `WHERE in_stock BETWEEN 10 AND 20;`
+IS DISTINCT FROM - Works like `<>` except can be used to test when values could be null. Example: `WHERE name IS DISTINCT FROM 'William';`
+OR - Returns the query if one condition tests true. Example: `SELECT * FROM spaceships WHERE country = USA OR operational = true;`
+NOT - Returns the row if expression tests to false. EXAMPLE: `SELECT * FROM rio_2016 WHERE medal_level NOT gold;`
+
+>If you cant list these from memory, do these flashcards until you can!
+
+>From the cats table, what data is returned from these queries?
+
+>SELECT name FROM cats WHERE gender = ‘F’;
+
+A: Seashell, Nola. 
+
+>SELECT name FROM cats WHERE age <> 3;
+
+A: Mushi, Seashell, Victoire, Nola,
+
+>SELECT ID FROM cats WHERE name != ‘Mushi’ AND gender = ‘M’;
+
+A: No results, the column is id, not ID. Some engines have column names as a case-senstive field. In the event that we're using an engine where column names are not case sensitive the results would be: 
+
+Azul, Victoire. 
+ 
