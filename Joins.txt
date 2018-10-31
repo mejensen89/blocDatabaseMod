@@ -1,0 +1,179 @@
+>How do you find related data held in two separate data tables?
+
+A: A Join clause pulls related data from separate tables. 
+
+>Explain, in your own words, the difference between an INNER JOIN, LEFT OUTER JOIN, and RIGHT OUTER JOIN. Give a real-world example for each.
+
+A: 
+INNER JOIN: The default method of pulling data from tables that produces one row in a result table for each common row amongst the queried table. 
+
+EXAMPLE: Compares cost of item with sales price. 
+
+```
+SELECT product.cost, sales.price
+FROM sales
+RIGHT OUTER JOIN product
+ON product.SKU = sales.SKU;
+
+```
+LEFT OUTER JOIN: A way to combine tables that will pull each row from the first table, and each row with a matching row from the second table. 
+
+EXAMPLE: Lists team results from competitions
+
+```
+SELECT competition.result, team.name
+FROM competition
+LEFT OUTER JOIN team
+ON competition.team_id = team.id;
+```
+
+RIGHT OUTER JOIN: A way to combine tables inot a results table so that the results table will contain each row from the second table and each matching row from the first table. 
+
+EXAMPLE: Displays members names by the services they purchase.
+
+```
+SELECT members.name, service.type
+FROM service
+RIGHT OUTER JOIN members
+ON members.services_id = service.id;
+```
+
+>Define primary key and foreign key. Give a real-world example for each.
+
+A: A primary key is a unique identifier for each row in a database table. An employee ID could serve as this in a companies database. 
+
+A foreign key is a primary key of one table that is included as a non-unique attribute in another table. For instance if you had a list of gym check ins, you could use the member_id as a non unique identifier to your vists logs: Its likely that a member would visit mulitple times wihtin a given time frame. 
+
+>Define aliasing.
+
+A: The process of defining abbreviations or short variable names for table names in SQL for use in queries. 
+
+>Change this query so that you are using aliasing:
+
+```
+SELECT professor.name, compensation.salary,
+compensation.vacation_days FROM professor JOIN
+compensation ON professor.id =
+compensation.professor_id;
+
+ANSWER:
+
+SELECT professor.name, compensation.salary,
+FROM compensation AS c
+FROM professor AS p
+c.vacation_days FROM p JOIN
+c ON p.id =
+c.professor_id;
+
+```
+>Why would you use a NATURAL JOIN? Give a real-world example.
+
+A: You would use it in situations where two tables contain at least one column that is the same data. For instance if you had two databases, one that recorded member check ins by id and another that recorded member information like emergency contact by id, then you could do a natural join on the member_id column to display the emergency contact information of everyone who checks in. 
+
+`Using this Employee schema and data, write queries to find the following information:
+
+>List all employees and all shifts.
+```
+//I'm not sure if they want me to use a join here, but there aren't really any columns between the two to join on: employees is just a name and id and shifts is just an id, date, start_time and end_time//
+
+SELECT * FROM employees;
+SELECT * FROM shifts;
+
+```
+
+>Using this Adoption schema and data, please write queries to retrieve the following information and include the results:
+
+>Create a list of all volunteers. If the volunteer is fostering a dog, include each dog as well.
+
+```
+SELECT volunteers.first_name AS "volunteer first name",
+        volunteers.last_name AS "volunteer last name" , 
+        dogs.name  AS " dogs name" 
+        FROM volunteers
+       LEFT  JOIN dogs
+        ON volunteers.foster_dog_id = dogs.id;
+```
+
+>The cat's name, adopter's name, and adopted date for each cat adopted within the past month to be displayed as part of the "Happy Tail" social media promotion which posts recent successful adoptions.
+
+```
+SELECT cats.name, adopters.first_name AS "adopter name", cat_adoptions.date as "Happy Tail"
+        FROM cat_adoptions
+        LEFT OUTER JOIN cats
+        ON cats.id = cat_adoptions.cat_id
+        INNER JOIN adopters 
+        ON adopters.id = cat_adoptions.adopter_id
+        WHERE  cat_adoptions.date < NOW() - INTERVAL '30 days' ;
+```
+
+>Create a list of adopters who have not yet chosen a dog to adopt.
+
+```
+SELECT adopters.first_name AS "Adopter name"
+	FROM adopters
+    LEFT OUTER JOIN dog_adoptions
+    ON adopters.id = dog_adoptions.adopter_id
+    WHERE adopters.id NOT IN (SELECT adopter_id FROM dog_adoptions);
+
+```
+
+>Lists of all cats and all dogs who have not been adopted.
+
+```
+SELECT cats.name
+    FROM cats
+    WHERE cats.id NOT IN(
+    SELECT cats.id
+    FROM cats
+    RIGHT JOIN cat_adoptions
+    ON cats.id = cat_adoptions.cat_id);
+
+SELECT dogs.name
+    FROM dogs
+    WHERE dogs.id != (
+    SELECT dogs.id
+    FROM dogs
+    INNER JOIN  dog_adoptions
+    ON dogs.id = dog_adoptions.dog_id);
+```
+
+>The name of the person who adopted Rosco.
+
+```
+ SELECT adopters.first_name, adopters.last_name
+    FROM dog_adoptions
+    INNER JOIN dogs
+    ON dog_adoptions.dog_id = dogs.id
+    INNER JOIN adopters
+    ON dog_adoptions.adopter_id = adopters.id
+    WHERE dogs.name = 'Rosco';
+```
+
+
+>Using this Library schema and data, write queries applying the following scenarios and include the results:
+
+>To determine if the library should buy more copies of a given book, please provide the names and position, in order, of all of the patrons with a hold (request for a book with all copies checked out) on "Advanced Potion-Making".
+
+```
+ SELECT *
+        FROM holds
+        INNER JOIN  patrons
+        ON holds.patron_id = patrons.id
+        INNER JOIN books
+        ON  holds.isbn = books.isbn
+        WHERE books.title = 'Advanced Potion-Making'
+        order by rank asc;
+```
+
+>List all of the library patrons. If they have one or more books checked out, list the books with the patrons.
+
+```
+SELECT patrons.name AS "patrons name", books.title AS "book title"
+FROM transactions
+right JOIN  patrons
+ON transactions.patron_id = patrons.id
+LEFT JOIN books
+ON transactions.isbn = books.isbn
+AND transactions.checked_in_date IS null;
+
+```
